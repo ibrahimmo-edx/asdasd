@@ -1,0 +1,116 @@
+
+#include <cs50.h>
+#include <math.h>
+#include <string.h>
+#include <stdlib.h>
+#include "helpers.h"
+
+// Converts a fraction formatted as X/Y to eighths
+int duration(string fraction)
+{
+    int up = fraction[0] - '0';
+    int down = fraction[2] - '0';
+
+    return (8 / down) * up;
+}
+
+// Calculates frequency (in Hz) of a note
+int frequency(string note)
+// first declaring the variables
+{
+    int o;
+    int i;
+    double f;
+    int n;
+    float t;
+
+// getting the octave number from the note by subtracting zero's ASCII value
+
+    o = note[strlen(note) - 1] - '0';
+
+// calculating frequencies of A with different octaves
+
+
+    if (o == 4)
+    {
+        f = 440;
+    }
+    else if (o  < 4)
+    {
+        i = 4 - o;
+        f = (440 / pow(2.0, i));
+    }
+    else if (o > 4)
+    {
+        i = o - 4;
+        f = (440 * pow(2.0, i));
+    }
+
+// calculations of each key and how many semi tones it's away from A in the same octave
+
+    if (note[0] == 'A')
+    {
+        n = 0;
+        t = (f / pow(2.0, (n / 12.0)));
+    }
+    else if (note[0] == 'B')
+    {
+        n = 2;
+        t = (f * pow(2.0, (n / 12.0)));
+    }
+    else if (note[0] == 'G')
+    {
+        n = 2;
+        t = (f / pow(2.0, (n / 12.0)));
+    }
+    else if (note[0] == 'F')
+    {
+        n = 4;
+        t = (f / pow(2.0, (n / 12.0)));
+    }
+    else if (note[0] == 'E')
+    {
+        n = 5;
+        t = (f / pow(2.0, (n / 12.0)));
+    }
+    else if (note[0] == 'D')
+    {
+        n = 7;
+        t = (f / pow(2.0, (n / 12.0)));
+    }
+    else if (note[0] == 'C')
+    {
+        n = 9;
+        t = (f / pow(2.0, (n / 12.0)));
+    }
+
+// adding flats and sharps frequencies
+
+    if (note[1] == 'b')
+    {
+        t = (t / pow(2.0, (1.0 / 12.0)));
+    }
+    else if (note[1] == '#')
+    {
+        t = (t * pow(2.0, (1.0 / 12.0)));
+    }
+
+// rounding and returning the frequency
+
+    int result = round(t);
+    return result;
+
+}
+
+// Determines whether a string represents a rest
+bool is_rest(string s)
+{
+    if (s[0] == '\0')
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
